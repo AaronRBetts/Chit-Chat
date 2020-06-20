@@ -9,7 +9,6 @@ const {
   MESSAGE_SENT,
   TYPING,
   PRIVATE_MESSAGE,
-  NEW_CHAT_USER,
 } = require("../Events");
 
 const { createUser, createMessage, createChat } = require("../Factories");
@@ -84,23 +83,6 @@ module.exports = function (socket) {
         socket.to(receiverSocket).emit(PRIVATE_MESSAGE, newChat);
         socket.emit(PRIVATE_MESSAGE, newChat);
       } else {
-        if (!(receiver in activeChat.users)) {
-          activeChat.users
-            .filter((user) => user in connectedUsers)
-            .map((user) => connectedUsers[user])
-            .map((user) => {
-              socket
-                .to(user.socketId)
-                .emit(NEW_CHAT_USER, {
-                  chatId: activeChat.id,
-                  newUser: receiver,
-                });
-            });
-          socket.emit(NEW_CHAT_USER, {
-            chatId: activeChat.id,
-            newUser: receiver,
-          });
-        }
         socket.to(receiverSocket).emit(PRIVATE_MESSAGE, activeChat);
       }
     }
