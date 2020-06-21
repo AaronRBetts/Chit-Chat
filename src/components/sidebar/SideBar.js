@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { FaSearch, FaChevronDown } from "react-icons/fa";
-import { MdEject, MdMenu } from "react-icons/md";
+import { FaSearch } from "react-icons/fa";
+import { MdEject } from "react-icons/md";
 import { SideBarOption } from "./SideBarOption";
 import { get, last, differenceBy } from "lodash";
 import { createChatNameFromUsers } from "../../Factories";
@@ -52,10 +52,7 @@ class SideBar extends Component {
       <div id="side-bar">
         <div className="heading">
           <div className="app-name">
-            Chit Chat <FaChevronDown />
-          </div>
-          <div className="menu">
-            <MdMenu />
+            Chit Chat
           </div>
         </div>
         <form onSubmit={this.handleSubmit} className="search">
@@ -79,7 +76,7 @@ class SideBar extends Component {
             }}
             className={`side-bar-select__option ${
               activeSideBar === SideBar.type.CHATS ? "active" : ""
-            }`}
+              }`}
           >
             <span>Chats</span>
           </div>
@@ -89,7 +86,7 @@ class SideBar extends Component {
             }}
             className={`side-bar-select__option ${
               activeSideBar === SideBar.type.USERS ? "active" : ""
-            }`}
+              }`}
           >
             <span>Users</span>
           </div>
@@ -103,36 +100,36 @@ class SideBar extends Component {
         >
           {activeSideBar === SideBar.type.CHATS
             ? chats.map((chat) => {
-                if (chat.name) {
-                  return (
-                    <SideBarOption
-                      key={chat.id}
-                      name={
-                        chat.isCommunity
-                          ? chat.name
-                          : createChatNameFromUsers(chat.users, user.name)
-                      }
-                      lastMessage={get(last(chat.messages), "message", "")}
-                      active={activeChat.id === chat.id}
-                      onClick={() => {
-                        this.props.setActiveChat(chat);
-                      }}
-                    />
-                  );
-                }
-                return null;
-              })
-            : differenceBy(users, [user], "name").map((otherUser) => {
+              if (chat.name) {
                 return (
                   <SideBarOption
-                    key={otherUser.id}
-                    name={otherUser.name}
+                    key={chat.id}
+                    name={
+                      chat.isCommunity
+                        ? chat.name
+                        : createChatNameFromUsers(chat.users, user.name)
+                    }
+                    lastMessage={get(last(chat.messages), "message", "")}
+                    active={activeChat.id === chat.id}
                     onClick={() => {
-                      this.addChatForUser(otherUser.name);
+                      this.props.setActiveChat(chat);
                     }}
                   />
                 );
-              })}
+              }
+              return null;
+            })
+            : differenceBy(users, [user], "name").map((otherUser) => {
+              return (
+                <SideBarOption
+                  key={otherUser.id}
+                  name={otherUser.name}
+                  onClick={() => {
+                    this.addChatForUser(otherUser.name);
+                  }}
+                />
+              );
+            })}
         </div>
         <div className="current-user">
           <span>{user.name}</span>

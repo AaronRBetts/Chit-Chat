@@ -1,5 +1,4 @@
 import React from "react";
-import { FaVideo, FaUserPlus, FaEllipsisV } from "react-icons/fa";
 
 export default function ({ name, numberOfUsers }) {
   return (
@@ -10,11 +9,6 @@ export default function ({ name, numberOfUsers }) {
           <div className="indicator"></div>
           <span>{numberOfUsers ? numberOfUsers : null}</span>
         </div>
-      </div>
-      <div className="options">
-        <FaVideo />
-        <FaUserPlus />
-        <FaEllipsisV />
       </div>
     </div>
   );

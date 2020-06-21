@@ -15,12 +15,12 @@ const createMessage = ({ message = "", sender = "" } = {}) => ({
 
 const createChat = ({
   messages = [],
-  name = "Community",
+  name = "Public chat",
   users = [],
   isCommunity = false,
 } = {}) => ({
   id: uuidv4(),
-  name: isCommunity ? "Community" : createChatNameFromUsers(users),
+  name: isCommunity ? "Public chat" : createChatNameFromUsers(users),
   messages,
   users,
   typingUsers: [],
